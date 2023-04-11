@@ -51,7 +51,9 @@ export default class App extends Component {
       <div className="container">
         <div className="todoBlock">
           <div className="title">
-            <h1 className="title">Todo List</h1>
+            <h1 className="title" style={{ textAlign: "center" }}>
+              Todo List
+            </h1>
           </div>
           {this.state.todoData.map((data) => (
             <div style={this.getStyle()} key={data.id}>
