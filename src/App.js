@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Paging from "./components/Paging";
 import List from "./components/List";
 import Form from "./components/Form";
@@ -8,11 +8,8 @@ export default function App() {
   <link href="/dist/output.css" rel="stylesheet"></link>;
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
-  const [currentTodos, setCurrentTodos] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(0);
-  const todosPerPage = 10;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,18 +28,8 @@ export default function App() {
 
     setTodoData((prev) => [newTodo, ...prev]);
 
-    if ((todoData.length + 1) % todosPerPage === 1) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
     setValue("");
   };
-
-  useEffect(() => {
-    const indexOfLastTodo = currentPage * todosPerPage;
-    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
-    const currentTodos = todoData.slice(indexOfFirstTodo, indexOfLastTodo);
-    setCurrentTodos(currentTodos);
-  }, [todoData, currentPage]);
 
   return (
     <div className="container">
@@ -59,7 +46,11 @@ export default function App() {
           setValue={setValue}
           formSubmitted={formSubmitted}
         />
-        <List todoData={currentTodos} setTodoData={setTodoData} />
+        <List
+          todoData={todoData}
+          setTodoData={setTodoData}
+          currentPage={currentPage}
+        />
         <Paging
           todoData={todoData}
           currentPage={currentPage}

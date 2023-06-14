@@ -1,6 +1,10 @@
 import React from "react";
 
-export default function List({ todoData, setTodoData }) {
+export default function List({ todoData, setTodoData, currentPage }) {
+  const todosPerPage = 10;
+  const indexOfLastTodo = (currentPage + 1) * todosPerPage;
+  const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+
   const btn_X = {
     color: "#fff",
     border: "none",
@@ -35,19 +39,22 @@ export default function List({ todoData, setTodoData }) {
 
   return (
     <div>
-      {todoData.map((data) => (
-        <div style={getStyle(data.finished)} key={data.id}>
-          <input
-            type="checkbox"
-            onChange={() => handleFinished(data.id)}
-            defaultChecked={false}
-          />
-          {data.title}
-          <button style={btn_X} onClick={() => handleClick(data.id)}>
-            x
-          </button>
-        </div>
-      ))}
+      {todoData
+        .filter((n, index) => indexOfLastTodo > index)
+        .filter((n, index) => indexOfFirstTodo <= index)
+        .map((data) => (
+          <div style={getStyle(data.finished)} key={data.id}>
+            <input
+              type="checkbox"
+              onChange={() => handleFinished(data.id)}
+              defaultChecked={false}
+            />
+            {data.title}
+            <button style={btn_X} onClick={() => handleClick(data.id)}>
+              x
+            </button>
+          </div>
+        ))}
     </div>
   );
 }
