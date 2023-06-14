@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function List({ todoData, setTodoData, currentPage }) {
+export default function List({
+  selectAll,
+  todoData,
+  setTodoData,
+  currentPage,
+}) {
   const todosPerPage = 10;
   const indexOfLastTodo = (currentPage + 1) * todosPerPage;
   const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
@@ -18,7 +23,7 @@ export default function List({ todoData, setTodoData, currentPage }) {
     return {
       padding: "10px",
       borderBottom: "1px #ccc dotted",
-      textDecoration: finished ? "line-through" : "none",
+      textDecoration: selectAll || finished ? "line-through" : "none",
     };
   };
 
@@ -47,7 +52,7 @@ export default function List({ todoData, setTodoData, currentPage }) {
             <input
               type="checkbox"
               onChange={() => handleFinished(data.id)}
-              defaultChecked={false}
+              checked={selectAll || data.finished}
             />
             {data.title}
             <button style={btn_X} onClick={() => handleClick(data.id)}>

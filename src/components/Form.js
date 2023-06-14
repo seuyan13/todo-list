@@ -12,7 +12,7 @@ export default function Form({ handleSubmit, setValue, value, formSubmitted }) {
   };
 
   return (
-    <form style={{ display: "flex" }} onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ display: "flex" }}>
       {formSubmitted ? (
         <input
           type="text"
